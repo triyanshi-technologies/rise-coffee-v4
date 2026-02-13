@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RISE Coffee Subscription - Premium Coffee Delivered</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="rise-coffee-header.css">
+
+</head>
+
+<body>
+    <div id="tr-header-img">
+
+        <!-- Top Banner -->
+        <div class="top-banner">
+            150+ reviews on TrustPilot (4.9/5) <a href="#" aria-label="Shop Now from top banner">SHOP NOW</a>
+        </div>
+
+        <!-- Main Header -->
+        <header class="main-header" role="banner">
+            <div class="header-inner">
+
+                <!-- Logo -->
+                <div class="logo" role="img" aria-label="RISE Coffee">
+                    <img src="assets/RISE_LOGO.avif" class="logo-img" alt="RISE Coffee Logo">
+                </div>
+
+                <!-- Desktop Navigation (hidden on medium+small screens) -->
+                <div class="nav-container" aria-hidden="false">
+                    <a href="#" class="subscribe-btn" aria-label="Subscribe and Save">SUBSCRIBE &amp; SAVE</a>
+
+                    <nav class="desktop-nav" aria-label="Main navigation">
+                        <a href="#">SHOP COFFEE</a>
+                        <a href="#">SHOP GIFTS</a>
+                        <a href="#">CHRISTMAS</a>
+                        <a href="#">LEARN</a>
+                    </nav>
+                </div>
+
+                <!-- Right Icons -->
+                <div class="header-icons" aria-hidden="false">
+                    <!-- Search button (hidden on medium+small) -->
+                    <button class="icon-btn search" aria-label="Search">
+                        <img src="assets/search-icon.png" alt="" aria-hidden="true">
+                    </button>
+
+                    <!-- Account button (hidden on medium+small) -->
+                    <button class="icon-btn account" aria-label="Account">
+                        <img src="assets/user-icon.png" alt="" aria-hidden="true">
+                    </button>
+
+                    <!-- Cart button (always shown on medium/small and large) -->
+                    <button class="icon-btn cart" aria-label="Cart">
+                        <img src="assets/cart-icon.webp" alt="Cart icon">
+                    </button>
+
+                    <!-- Hamburger (visible on medium & small screens) -->
+                    <button id="hamburger" class="hamburger" aria-controls="mobileMenu" aria-expanded="false"
+                        aria-pressed="false" aria-label="Open menu">
+                        <span class="line"></span>
+                        <span class="line"></span>
+                        <span class="line"></span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Mobile Menu Overlay -->
+        <div id="mobileMenuOverlay" class="mobile-menu-overlay" tabindex="-1" aria-hidden="true"></div>
+
+        <!-- Mobile Menu -->
+        <aside id="mobileMenu" class="mobile-menu" role="dialog" aria-labelledby="mobileMenuLabel" aria-hidden="true">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;">
+                <strong id="mobileMenuLabel" style="font-size:18px">Menu</strong>
+                <button id="mobileClose" class="icon-btn" aria-label="Close menu" title="Close">
+                    <!-- small X -->
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path d="M6 6L18 18M6 18L18 6" stroke="#000" stroke-width="2" stroke-linecap="round" />
+                    </svg>
+                </button>
+            </div>
+
+            <nav class="mobile-nav" aria-label="Mobile navigation">
+                <a href="#" class="subscribe-btn"
+                    style="background:var(--black);color:var(--white);border-radius:6px; padding:12px; display:inline-flex; justify-content:center;">SUBSCRIBE
+                    &amp; SAVE</a>
+                <a href="#">SHOP COFFEE</a>
+                <a href="#">SHOP GIFTS</a>
+                <a href="#">CHRISTMAS</a>
+                <a href="#">LEARN</a>
+                <!-- optional extra items -->
+                <a href="#">ACCOUNT</a>
+                <a href="#">CART</a>
+            </nav>
+        </aside>
+
+        <!-- Minimal JS: toggle mobile menu, overlay, ESC key to close -->
+        <script>
+            (function () {
+                const hamburger = document.getElementById('hamburger');
+                const mobileMenu = document.getElementById('mobileMenu');
+                const overlay = document.getElementById('mobileMenuOverlay');
+                const mobileClose = document.getElementById('mobileClose');
+
+                function openMenu() {
+                    hamburger.setAttribute('aria-expanded', 'true');
+                    hamburger.setAttribute('aria-pressed', 'true');
+                    mobileMenu.classList.add('active');
+                    overlay.classList.add('active');
+                    mobileMenu.setAttribute('aria-hidden', 'false');
+                    overlay.setAttribute('aria-hidden', 'false');
+                    document.body.style.overflow = 'hidden';
+                    // move focus to mobile menu for accessibility
+                    mobileMenu.querySelector('.mobile-nav a, .subscribe-btn').focus?.();
+                }
+
+                function closeMenu() {
+                    hamburger.setAttribute('aria-expanded', 'false');
+                    hamburger.setAttribute('aria-pressed', 'false');
+                    mobileMenu.classList.remove('active');
+                    overlay.classList.remove('active');
+                    mobileMenu.setAttribute('aria-hidden', 'true');
+                    overlay.setAttribute('aria-hidden', 'true');
+                    document.body.style.overflow = '';
+                    hamburger.focus?.();
+                }
+
+                hamburger.addEventListener('click', function (e) {
+                    const expanded = hamburger.getAttribute('aria-expanded') === 'true';
+                    if (expanded) closeMenu(); else openMenu();
+                });
+
+                overlay.addEventListener('click', closeMenu);
+                mobileClose.addEventListener('click', closeMenu);
+
+                // close on ESC
+                document.addEventListener('keydown', function (e) {
+                    if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
+                        closeMenu();
+                    }
+                });
+
+                // close when clicking any link inside mobile menu
+                mobileMenu.addEventListener('click', function (e) {
+                    if (e.target.tagName === 'A') closeMenu();
+                });
+
+                // Optional: adaptively show hamburger or not if user resizes
+                // Not strictly necessary, CSS handles display — but keep aria in sync
+                function syncAriaOnResize() {
+                    const isSmall = window.matchMedia('(max-width: 1023px)').matches;
+                    // if small, hamburger should be available to open menu; if large, ensure menu closed
+                    if (!isSmall) {
+                        closeMenu();
+                    }
+                }
+                window.addEventListener('resize', syncAriaOnResize);
+                // initial sync
+                syncAriaOnResize();
+
+            })();
+        </script>
+    </div>
+    <section class="tr-product-section" aria-labelledby="tr-product-title">
+        <div class="tr-product-grid">
+
+            <!-- Gallery Section -->
+            <aside class="tr-gallery" role="region" aria-label="Product gallery">
+                <figure class="tr-main-image">
+                    <img src="https://www.risecoffeebox.co.uk/cdn/shop/files/KLAVIYo_HEADERS_-_2025-09-13T085711.416.png?v=1758617413&width=1080"
+                        alt="RISE Coffee Subscription box featuring premium specialty coffee" class="tr-main-img">
+                </figure>
+
+                <div class="tr-thumb-carousel">
+                    <div class="tr-thumb-row">
+                        <button class="tr-thumb" type="button" aria-label="View main product image">
+                            <img src="https://www.risecoffeebox.co.uk/cdn/shop/files/KLAVIYo_HEADERS_-_2025-09-13T085711.416.png?v=1758617413&width=120"
+                                alt="RISE Coffee box main view" class="tr-thumb-img">
+                        </button>
+                        <button class="tr-thumb" type="button" aria-label="View coffee bags">
+                            <img src="https://www.risecoffeebox.co.uk/cdn/shop/files/rise-open-box-TRANSPARENT.png?v=1757750265&width=1080"
+                                alt="Open coffee box with bags" class="tr-thumb-img">
+                        </button>
+                        <button class="tr-thumb" type="button" aria-label="View oat milk inclusion">
+                            <img src="https://www.risecoffeebox.co.uk/cdn/shop/files/Screenshot_2025-09-16_at_10.32.05.png?v=1760429427&width=1080"
+                                alt="Oat milk freebie" class="tr-thumb-img">
+                        </button>
+                        <button class="tr-thumb" type="button" aria-label="View box contents">
+                            <img src="https://www.risecoffeebox.co.uk/cdn/shop/files/YOU_RE_INVITED_COFFEE_TASTING_24.png?v=1760429427&width=1080"
+                                alt="Complete box contents" class="tr-thumb-img">
+                        </button>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Details Section -->
+            <div class="tr-details">
+
+                <!-- Product Header -->
+                <header class="tr-product-header">
+                    <h1 id="tr-product-title" class="tr-title">RISE Coffee Subscription</h1>
+
+                    <div class="tr-rating">
+                        <span class="tr-stars" aria-label="5 out of 5 stars">★★★★★</span>
+                        <span class="tr-rating-text">Rated Excellent | 1'000s of Happy Drinkers</span>
+                    </div>
+
+                    <p class="tr-desc">
+                        Discover a world of flavour with the B Corp-certified RISE coffee subscription! Each month,
+                        enjoy handpicked specialty coffee from independent roasters, an 8-page coffee lover's guide,
+                        plus exciting freebies like barista oat milk, iced coffee, and chocolates in every box. Your
+                        coffee adventure starts now!
+                    </p>
+                </header>
+                <!-- Box Size Selection -->
+                <fieldset class="tr-field">
+                    <legend class="tr-field-label">Choose Your Box Size</legend>
+                    <div class="tr-options" role="radiogroup" aria-label="Box size options">
+
+                        <!-- BEST VALUE -->
+                        <label class="tr-option-wrapper-bv" data-tag="BEST VALUE" data-tag-color="#32e64c">
+                            <input type="radio" name="tr-boxsize" value="4-bags" class="tr-option-input-bv" checked>
+                            <div class="tooltip">
+                                <img src="assets/coffee-bag_icon.png" alt="4 Coffee Bags Icon" class="tr-option-icon">
+                                <img src="assets/coffee-bag_icon.png" alt="4 Coffee Bags Icon" class="tr-option-icon">
+                                <img src="assets/coffee-bag_icon.png" alt="4 Coffee Bags Icon" class="tr-option-icon">
+                                <img src="assets/coffee-bag_icon.png" alt="4 Coffee Bags Icon" class="tr-option-icon">
+                                <span class="tooltiptext">4 Coffee Bags</span>
+                            </div>
+                        </label>
+
+                        <!-- 3 bags -->
+                        <label class="tr-option-wrapper-general">
+                            <input type="radio" name="tr-boxsize" value="3-bags" class="tr-option-input-general">
+                            <div class="tooltip">
+                                <img src="assets/coffee-bag_icon.png" alt="3 Coffee Bags Icon"
+                                    class="tr-option-icon-general">
+                                <img src="assets/coffee-bag_icon.png" alt="3 Coffee Bags Icon"
+                                    class="tr-option-icon-general">
+                                <img src="assets/coffee-bag_icon.png" alt="3 Coffee Bags Icon"
+                                    class="tr-option-icon-general">
+                                <span class="tooltiptext tooltiptext-general">3 Coffee Bags</span>
+                            </div>
+                        </label>
+                        <!-- MOST POPULAR -->
+                        <label class="tr-option-wrapper-mp" data-tag="MOST POPULAR" data-tag-color="#ffa500">
+                            <input type="radio" name="tr-boxsize" value="2-bags" class="tr-option-input-mp">
+                            <div class="tooltip">
+                                <img src="assets/coffee-bag_icon.png" alt="2 Coffee Bags Icon" class="tr-option-icon">
+                                <img src="assets/coffee-bag_icon.png" alt="2 Coffee Bags Icon" class="tr-option-icon">
+                                <span class="tooltiptext tooltiptext-mp">2 Coffee Bags</span>
+                            </div>
+                        </label>
+
+                        <!-- 1 bag -->
+                        <label class="tr-option-wrapper-general">
+                            <input type="radio" name="tr-boxsize" value="1-bag" class="tr-option-input-general">
+                            <div class="tooltip">
+                                <img src="assets/coffee-bag_icon.png" alt="1 Coffee Bag Icon"
+                                    class="tr-option-icon-general">
+                                <span class="tooltiptext tooltiptext-general tooltiptext-one">1 Coffee Bag</span>
+                            </div>
+                        </label>
+
+                    </div>
+                </fieldset>
+
+                <!-- Grind Type Selection -->
+                <fieldset class="tr-field tr-field-gt">
+                    <legend class="tr-field-label">Choose Your Grind Type</legend>
+                    <div class="tr-options-gp" role="radiogroup" aria-label="Grind type options">
+
+                        <label class="tr-option-wrapper tr-option-wrapper-gp">
+                            <input type="radio" name="tr-grind" value="whole-bean"
+                                class="tr-option-input tr-option-input-fl" checked>
+                            <div class="tooltip">
+                                <img src="assets/2 coffee beans -icon.png" class="tr-option-icon-gp">
+                                <span class="tooltiptext tooltiptext-gp">Whole Bean</span>
+                            </div>
+                        </label>
+
+                        <label class="tr-option-wrapper">
+                            <input type="radio" name="tr-grind" value="coarse" class="tr-option-input">
+                            <div class="tooltip">
+                                <img src="assets/ground coarse.png" class="tr-option-icon-gp tr-option-icon-texture">
+                                <span class="tooltiptext tooltiptext-gp">Ground Coarse (Cafetière)</span>
+                            </div>
+                        </label>
+
+                        <label class="tr-option-wrapper">
+                            <input type="radio" name="tr-grind" value="medium" class="tr-option-input">
+                            <div class="tooltip">
+                                <img src="assets/ground medium.png" class="tr-option-icon-gp tr-option-icon-texture">
+                                <span class="tooltiptext tooltiptext-gp">Ground Medium (Filter)</span>
+                            </div>
+                        </label>
+
+                        <label class="tr-option-wrapper">
+                            <input type="radio" name="tr-grind" value="fine" class="tr-option-input">
+                            <div class="tooltip">
+                                <img src="assets/fine espresso.png" class="tr-option-icon-gp tr-option-icon-texture">
+                                <span class="tooltiptext tooltiptext-gp">Fine (Espresso)</span>
+                            </div>
+                        </label>
+
+                        <label class="tr-option-wrapper">
+                            <input type="radio" name="tr-grind" value="decaf"
+                                class="tr-option-input tr-option-input-fl">
+                            <div class="tooltip">
+                                <img src="assets/decaf.png" class="tr-option-icon-gp">
+                                <span class="tooltiptext tooltiptext-gp">Decaf Whole Bean</span>
+                            </div>
+                        </label>
+
+                    </div>
+                </fieldset>
+
+                <!-- Subscription Options -->
+                <article class="tr-subscription-section">
+                    <header class="tr-subscription-header">
+                        <h2 class="tr-subscription-title">Select Your Plan</h2>
+                    </header>
+
+                    <div class="tr-price-cards">
+                        <div class="tr-price-card tr-price-card-active">
+                            <span class="tr-badge">Best Value</span>
+                            <div class="tr-price-header">Subscribe & Save</div>
+                            <div class="tr-price-display">
+                                <span class="tr-old-price">£42.00</span>
+                                <span class="tr-new-price">£40.00</span>
+                            </div>
+                            <span class="tr-savings">Save £2.00</span>
+                        </div>
+
+                        <div class="tr-price-card">
+                            <div class="tr-price-header">Buy a one-off box</div>
+                            <div class="tr-price-display">
+                                <span class="tr-new-price">£42.00</span>
+                            </div>
+                            <span style="font-size: 12px; color: var(--tr-muted); display: block; margin-top: 8px;">No
+                                commitment</span>
+                        </div>
+                    </div>
+
+                    <!-- Frequency Selection -->
+                    <div class="tr-frequency-wrapper">
+                        <label for="tr-frequency" class="tr-field-label">Choose Frequency:</label>
+                        <select id="tr-frequency" class="tr-select" aria-label="Delivery frequency">
+                            <option value="4-weeks">Every 4 weeks (most popular)</option>
+                            <option value="2-weeks">Every 2 weeks</option>
+                            <option value="8-weeks">Every 8 weeks</option>
+                        </select>
+                    </div>
+
+                    <!-- Benefits List -->
+                    <ul class="tr-benefits" role="list">
+                        <li class="tr-benefit-item">
+                            <span class="tr-benefit-icon" aria-hidden="true">✓</span>
+                            <span>Best Value saving</span>
+                        </li>
+                        <li class="tr-benefit-item">
+                            <span class="tr-benefit-icon" aria-hidden="true">✓</span>
+                            <span>Free tracked delivery (ships next day)</span>
+                        </li>
+                        <li class="tr-benefit-item">
+                            <span class="tr-benefit-icon" aria-hidden="true">✓</span>
+                            <span>Pause, skip or cancel anytime</span>
+                        </li>
+                        <li class="tr-benefit-item">
+                            <span class="tr-benefit-icon" aria-hidden="true">✓</span>
+                            <span>Named Best Multi Brand Subscription by The Guardian & BBC Good Food</span>
+                        </li>
+                        <li class="tr-benefit-item">
+                            <span class="tr-benefit-icon" aria-hidden="true">✓</span>
+                            <span>B Corp</span>
+                        </li>
+                    </ul>
+                </article>
+                <script>
+
+                    const cards = document.querySelectorAll('.tr-price-card');
+                    cards.forEach(card => {
+                        card.addEventListener('click', () => {
+                            cards.forEach(c => c.classList.remove('tr-price-card-active'));
+                            card.classList.add('tr-price-card-active');
+                        });
+                    });
+
+                    // Show/hide frequency section based on subscription plan selection
+                    const priceCards = document.querySelectorAll('.tr-price-card');
+                    const frequencyWrapper = document.querySelector('.tr-frequency-wrapper');
+                    const benefitsList = document.querySelector('.tr-benefits');
+
+                    priceCards.forEach((card, index) => {
+                        card.addEventListener('click', () => {
+                            // Remove active class from all cards
+                            priceCards.forEach(c => c.classList.remove('tr-price-card-active'));
+
+                            // Add active class to clicked card
+                            card.classList.add('tr-price-card-active');
+
+                            // Show frequency section for first card (Subscribe & Save), hide for second card (One-off)
+                            if (index === 0) {
+                                frequencyWrapper.style.display = 'block';
+                                benefitsList.style.display = 'flex';
+                            } else {
+                                frequencyWrapper.style.display = 'none';
+                                benefitsList.style.display = 'none';
+                            }
+                        });
+                    });
+
+                    // Set initial state - show frequency section since Subscribe & Save is active by default
+                    frequencyWrapper.style.display = 'block';
+                    benefitsList.style.display = 'flex';
+                </script>
+
+                <!-- Flexibility Note -->
+                <aside class="tr-note" role="note">
+                    <p><span class="tr-note-emphasis">100% flexible</span> - pause, skip or cancel anytime. </p>
+                </aside>
+
+                <p class="tr-shipping">
+                    Free 48 hour tracked <a href="#" class="tr-link">shipping</a> on ongoing orders - always!
+                </p>
+
+                <div class="tr-gift-section">
+                    <label class="tr-gift-label">
+                        <input type="checkbox" class="tr-gift-checkbox" />
+                        <span class="tr-gift-text">Is this a gift?</span>
+                    </label>
+                    <img src="https://cdn.giftship.app/build/assets/images/gift.svg" style="width: 30px; height: auto;"
+                        class="tr-gift-icon">
+                </div>
+
+
+                <!-- Call to Action -->
+                <div class="tr-cta">
+                    <button type="button" class="tr-btn tr-btn-primary" aria-label="Add to cart">
+                        Add to Cart →
+                    </button>
+                    <button type="button" class="tr-btn tr-btn-secondary" aria-label="Buy now with express checkout">
+                        Buy with <svg xmlns="http://www.w3.org/2000/svg" width="51" height="20"
+                            aria-labelledby="shop-logo" viewBox="0 -2 206 81">
+                            <!-- <title id="shop-logo">Shop</title> -->
+                            <path id="shop-logo" fill="#000"
+                                d="M29.514 35.18c-7.934-1.697-11.469-2.36-11.469-5.374 0-2.834 2.392-4.246 7.176-4.246 4.207 0 7.283 1.813 9.546 5.363.171.274.524.369.812.222l8.927-4.447a.616.616 0 0 0 .256-.864c-3.705-6.332-10.55-9.798-19.562-9.798-11.843 0-19.2 5.752-19.2 14.898 0 9.714 8.96 12.169 16.904 13.865 7.944 1.697 11.49 2.36 11.49 5.373 0 3.014-2.584 4.436-7.742 4.436-4.763 0-8.297-2.15-10.433-6.321a.63.63 0 0 0-.843-.274L6.47 52.364a.623.623 0 0 0-.278.843c3.535 7.006 10.785 10.947 20.47 10.947 12.334 0 19.787-5.658 19.787-15.088s-9.001-12.169-16.935-13.865v-.021ZM77.353 16.036c-5.062 0-9.536 1.77-12.75 4.92-.203.19-.534.053-.534-.221V.622a.62.62 0 0 0-.63-.622h-11.17a.62.62 0 0 0-.63.622v62.426a.62.62 0 0 0 .63.621h11.17a.62.62 0 0 0 .63-.621V35.664c0-5.289 4.11-9.345 9.653-9.345 5.542 0 9.557 3.972 9.557 9.345v27.384a.62.62 0 0 0 .63.621h11.17a.62.62 0 0 0 .63-.621V35.664c0-11.505-7.646-19.618-18.356-19.618v-.01ZM118.389 14.255c-6.065 0-11.767 1.823-15.847 4.467a.618.618 0 0 0-.202.833l4.922 8.292c.182.295.566.4.865.22a19.82 19.82 0 0 1 10.262-2.78c9.749 0 16.914 6.785 16.914 15.75 0 7.64-5.734 13.297-13.006 13.297-5.926 0-10.037-3.403-10.037-8.207 0-2.75 1.185-5.005 4.271-6.596a.607.607 0 0 0 .246-.864l-4.645-7.754a.632.632 0 0 0-.759-.264c-6.225 2.276-10.593 7.755-10.593 15.109 0 11.126 8.981 19.428 21.507 19.428 14.629 0 25.147-9.998 25.147-24.338 0-15.372-12.237-26.603-29.066-26.603l.021.01ZM180.098 15.951c-5.649 0-10.689 2.055-14.373 5.68a.313.313 0 0 1-.534-.222v-4.362a.62.62 0 0 0-.63-.621H153.68a.62.62 0 0 0-.63.621v62.331a.62.62 0 0 0 .63.622h11.169a.62.62 0 0 0 .631-.622v-20.44c0-.274.331-.41.533-.231 3.674 3.371 8.532 5.342 14.096 5.342 13.102 0 23.321-10.463 23.321-24.054 0-13.592-10.23-24.054-23.321-24.054l-.011.01Zm-2.103 37.54c-7.454 0-13.103-5.847-13.103-13.58 0-7.734 5.638-13.582 13.103-13.582 7.464 0 13.091 5.753 13.091 13.581 0 7.829-5.553 13.581-13.102 13.581h.011Z">
+                            </path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>

@@ -1,0 +1,478 @@
+:root {
+    --yellow: #FFE500;
+    --black: #000;
+    --white: #fff;
+    --max-width: 1400px;
+    --gap: 28px;
+    --nav-font-size: 14px;
+    --mobile-break: 900px;
+    --tablet-break: 600px;
+}
+
+/* Reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: #fff;
+}
+
+/* =====================
+   Top banner
+===================== */
+.top-banner {
+    background: var(--black);
+    color: var(--white);
+    text-align: center;
+    padding: 8px 12px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.top-banner a {
+    color: var(--white);
+    text-decoration: underline;
+    margin-left: 8px;
+    font-weight: 700;
+}
+
+/* =====================
+   Main Header
+===================== */
+.main-header {
+    background: var(--yellow);
+    position: relative;
+    width: 100%;
+}
+
+.header-inner {
+    width: 100%;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    display: flex;
+    gap: 0px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 20px;
+    gap: var(--gap);
+}
+
+/* =====================
+   Logo
+===================== */
+.logo {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+}
+
+.logo-img {
+    display: block;
+    width: 110px;
+    height: auto;
+}
+
+
+/* =====================
+   Center Nav (Desktop)
+===================== */
+.nav-container {
+    display: flex;
+    align-items: center;
+    gap: var(--gap);
+    flex: 1 1 auto;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.subscribe-btn {
+    background: var(--black);
+    color: var(--white);
+    padding: 12px 20px;
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 14px;
+    letter-spacing: 0.4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+}
+
+.subscribe-btn::after {
+    content: '→';
+    font-size: 16px;
+}
+
+nav.desktop-nav {
+    display: flex;
+    gap: 28px;
+    align-items: center;
+    justify-content: center;
+}
+
+nav.desktop-nav a {
+    color: var(--black);
+    text-decoration: none;
+    font-weight: 800;
+    font-size: var(--nav-font-size);
+    letter-spacing: 0.5px;
+    position: relative;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+nav.desktop-nav a::after {
+    content: '▼';
+    font-size: 9px;
+    margin-left: 6px;
+    opacity: 0.7;
+}
+
+nav.desktop-nav a:hover {
+    opacity: 0.75;
+}
+
+/* =====================
+   Right Icons
+===================== */
+.header-icons {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    /* ✅ pushes icons to the right */
+    gap: 18px;
+    flex: 0 0 auto;
+}
+
+.icon-btn {
+    background: none;
+    border: none;
+    padding: 6px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-btn img {
+    display: block;
+    width: 26px;
+    height: 26px;
+    object-fit: contain;
+    stroke-width: 2.5;
+
+}
+
+
+/* =====================
+   Hamburger
+===================== */
+.hamburger {
+    /* display: flex; */
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    padding: 8px;
+    cursor: pointer;
+}
+
+.hamburger .line {
+    display: block;
+    width: 24px;
+    height: 3px;
+    background: var(--black);
+    margin: 4px 0;
+    transition: transform 0.25s ease, opacity 0.2s ease;
+}
+
+.hamburger[aria-pressed="true"] .line:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+}
+
+.hamburger[aria-pressed="true"] .line:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger[aria-pressed="true"] .line:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
+}
+
+/* =====================
+   Mobile Menu
+===================== */
+.mobile-menu-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .28s ease;
+    z-index: 900;
+}
+
+.mobile-menu-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    right: -360px;
+    width: 320px;
+    max-width: 80%;
+    height: 100vh;
+    background: var(--yellow);
+    box-shadow: -12px 0 40px rgba(0, 0, 0, 0.12);
+    transition: right .28s cubic-bezier(.2, .9, .3, 1);
+    z-index: 1000;
+    padding: 72px 22px 28px;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.mobile-menu.active {
+    right: 0;
+}
+
+.mobile-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.mobile-nav a {
+    color: var(--black);
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 16px;
+    padding: 12px 6px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.mobile-nav .subscribe-btn {
+    width: 100%;
+    justify-content: center;
+    background: var(--black);
+    color: var(--white);
+    padding: 12px;
+    border-radius: 6px;
+}
+
+/* =====================
+   RESPONSIVE RULES
+===================== */
+
+/* Desktop */
+@media (max-width: 1024px) {
+    .main-header {
+        padding: 16px 18px;
+    }
+
+    .logo-img {
+        width: 120px;
+    }
+
+    .hamburger {
+        display: none;
+    }
+
+    .nav-container {
+        display: flex;
+    }
+
+    .header-icons {
+        display: flex;
+    }
+}
+
+/* Tablets & Medium screens */
+@media (max-width: 1023px) {
+    .nav-container {
+        display: none;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+
+    .header-icons {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 12px;
+        margin-left: auto;
+    }
+
+    .header-icons .icon-btn.search,
+    .header-icons .icon-btn.account {
+        display: none;
+    }
+
+    .header-icons .icon-btn.cart {
+        display: inline-flex;
+    }
+
+    .logo-img {
+        width: 96px;
+    }
+
+    .main-header {
+        padding: 16px 18px;
+    }
+
+    .header-inner {
+        justify-content: space-between;
+    }
+}
+
+/* Small phones */
+@media (max-width: 599px) {
+    :root {
+        --gap: 16px;
+    }
+
+    .logo-img {
+        width: 84px;
+    }
+
+    .subscribe-btn {
+        padding: 10px 12px;
+        font-size: 13px;
+    }
+
+    .main-header {
+        padding: 12px 12px;
+    }
+
+    .mobile-menu {
+        width: 280px;
+        right: -320px;
+    }
+
+    .mobile-menu.active {
+        right: 0;
+    }
+
+    .mobile-nav a {
+        font-size: 15px;
+        padding: 10px 6px;
+    }
+
+    .icon-btn img {
+        width: 26px;
+    }
+}
+
+/* Extra large screens */
+@media (min-width: 1600px) {
+    .header-inner {
+        gap: 38px;
+        max-width: 1600px;
+    }
+
+    .logo-img {
+        width: 140px;
+    }
+
+    nav.desktop-nav a {
+        font-size: 15px;
+    }
+}
+
+/* Tiny phones (320px safety) */
+
+
+@media (max-width: 1100px) {
+    .header-inner {
+        gap: 16px;
+        padding: 14px 16px;
+    }
+
+    .logo-img {
+        width: 90px;
+    }
+
+    nav.desktop-nav {
+        gap: 18px;
+    }
+
+    nav.desktop-nav a {
+        font-size: 13px;
+    }
+
+    .subscribe-btn {
+        padding: 10px 14px;
+        font-size: 13px;
+    }
+
+    .header-icons {
+        gap: 12px;
+    }
+}
+
+/* Focus states */
+.icon-btn:focus,
+.hamburger:focus,
+.subscribe-btn:focus,
+nav.desktop-nav a:focus {
+    outline: 3px solid rgba(0, 0, 0, 0.12);
+    outline-offset: 2px;
+}
+
+/* remove dropdown arrows in mobile */
+.mobile-nav a::after {
+    content: '';
+}
+
+@media (max-width: 377px) {
+    .top-banner {
+        font-size: 11px;
+        padding: 6px 8px;
+        width: 117%;
+    }
+
+    .logo-img {
+        width: 72px;
+    }
+
+    .subscribe-btn {
+        padding: 8px 10px;
+        font-size: 12px;
+    }
+
+    /* .hamburger {
+        display: flex;
+        width: 30px;
+        height: 10px;
+    } */
+
+    .icon-btn img {
+        width: 22px;
+    }
+
+    .main-header {
+        width: 117%;
+    }
+}
