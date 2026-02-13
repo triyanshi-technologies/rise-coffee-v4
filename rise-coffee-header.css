@@ -8,7 +8,9 @@
     --mobile-break: 900px;
     --tablet-break: 600px;
 }
-
+html, body {
+    overflow-x: hidden;
+}
 /* Reset */
 * {
     box-sizing: border-box;
@@ -450,7 +452,7 @@ nav.desktop-nav a:focus {
     .top-banner {
         font-size: 11px;
         padding: 6px 8px;
-        width: 117%;
+        /* width: 117%; */
     }
 
     .logo-img {
@@ -473,6 +475,6 @@ nav.desktop-nav a:focus {
     }
 
     .main-header {
-        width: 117%;
+        /* width: 117%; */
     }
 }
